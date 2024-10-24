@@ -195,7 +195,7 @@ if st.session_state.get('analysis_report'):
     st.markdown(st.session_state['analysis_report'])
 if st.session_state.get('graph_code'):
     try:
-        graph_code = str(analysis_report.tasks_output[3])
+        graph_code = str(st.session_state['graph_code'])
         exec(graph_code.replace("`", "").replace("python", ""))
     except:
         st.error("Sorry, there are no available graphs")
