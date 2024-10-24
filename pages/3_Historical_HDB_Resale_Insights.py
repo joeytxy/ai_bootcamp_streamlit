@@ -28,13 +28,25 @@ else:
     os.environ['OPENAI_API_KEY'] = st.secrets['OPENAI_API_KEY']
     os.environ['OPENAI_MODEL_NAME'] = st.secrets['OPENAI_MODEL_NAME']
 
+def clear_parameters():
+    del st.session_state["topic"]
+    del st.session_state["analysis_report"]
+    del st.session_state["graph_code"]
+
 st.title("Welcome to the Historical HDB Resale Insights Page")
 
-with st.form("Input"):
-    st.header("HDB Resale Property Question on Past Transactions")
-    topic = st.text_area(label = "Please type out your question here:", value = "", placeholder= None)
-    st.caption("Click on submit to proceed")
-    submitted_topic = st.form_submit_button("Submit")
+if st.session_state.get("topic"):
+    with st.form("Input"):
+        st.header("HDB Resale Property Question on Past Transactions")
+        topic = st.text_area(label = "Please type out your question here:", value = "", placeholder= None)
+        st.caption("Click on submit to proceed")
+        submitted_topic = st.form_submit_button("Submit", on_click=clear_parameters())
+else:
+    with st.form("Input"):
+        st.header("HDB Resale Property Question on Past Transactions")
+        topic = st.text_area(label = "Please type out your question here:", value = "", placeholder= None)
+        st.caption("Click on submit to proceed")
+        submitted_topic = st.form_submit_button("Submit")
 
 if 'topic' in st.session_state:
     display_qn = "Your Previous Question: "+ st.session_state['topic']
