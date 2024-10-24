@@ -38,7 +38,8 @@ with st.form("Input"):
         monthly_income = col2.number_input(label = "Monthly Household Income", min_value = 0, max_value = 100000, value = st.session_state.get('monthly_income', None), placeholder = None)
 
     with col3:
-        marital = col3.selectbox(label = "Marital Staus", options = ["Single", "Married"], index= st.session_state.get('marital', None))
+        option_list = ["Single", "Married"]
+        marital = col3.selectbox(label = "Marital Staus", options = option_list, index = st.session_state.get('marital', None))
 
     st.header("HDB Resale Property Question")
     question = st.text_area(label = "Please type out your question here:", value = st.session_state.get('question', ""), placeholder= None)
@@ -150,7 +151,7 @@ if submitted_question:
             st.session_state['question'] = question
             st.session_state['age'] = age
             st.session_state['monthly_income'] = monthly_income
-            st.session_state['marital'] = marital
+            st.session_state['marital'] = option_list.index(marital)
 
 if st.session_state.get('answer'):
     st.markdown(st.session_state['answer'])

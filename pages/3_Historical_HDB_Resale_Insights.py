@@ -32,7 +32,7 @@ st.title("Welcome to the Historical HDB Resale Insights Page")
 
 with st.form("Input"):
     st.header("HDB Resale Property Question on Past Transactions")
-    topic = st.text_area(label = "Please type out your question here:", value=st.session_state.get('topic', ""), placeholder= None)
+    topic = st.text_area(label = "What would you like to find out?", value=st.session_state.get('topic', ""), placeholder= None)
     st.caption("Click on submit to proceed")
     submitted_topic = st.form_submit_button("Submit")
 
@@ -181,9 +181,9 @@ def data_ai(topic):
 
 if submitted_topic:
     if topic=="":
-        st.error("Please enter a question")
+        st.error("Please enter a topic/question")
     elif not any(char.isalpha() for char in topic):
-        st.error("Please enter a valid question")
+        st.error("Please enter a valid topic/question")
     else:
         with st.spinner("Please wait..."):
             analysis_report = data_ai(topic)
