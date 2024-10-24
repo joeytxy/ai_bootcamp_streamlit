@@ -33,6 +33,8 @@ with st.form("Input"):
     col1,col2,col3 = st.columns(3)
     with col1:
         age = col1.number_input(label = "Age", min_value = 18, max_value = 120, value = st.session_state.get('age', None), placeholder = None)
+        if age!= st.session_state.get('age'):
+            st.session_state.age = age
 
     with col2:
         monthly_income = col2.number_input(label = "Monthly Household Income", min_value = 0, max_value = 100000, value = st.session_state.get('monthly_income', None), placeholder = None)
