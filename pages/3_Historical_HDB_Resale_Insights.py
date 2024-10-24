@@ -21,8 +21,8 @@ if load_dotenv():
     os.environ['OPENAI_API_KEY'] = os.getenv('OPENAI_API_KEY')
     os.environ['OPENAI_MODEL_NAME'] = os.getenv('OPENAI_MODEL_NAME')
 else:
-    os.environ['OPENAI_API_KEY'] = st.secrets('OPENAI_API_KEY')
-    os.environ['OPENAI_MODEL_NAME'] = st.secrets('OPENAI_MODEL_NAME')
+    os.environ['OPENAI_API_KEY'] = st.secrets['OPENAI_API_KEY']
+    os.environ['OPENAI_MODEL_NAME'] = st.secrets['OPENAI_MODEL_NAME']
 
 st.title("Welcome to the Historical HDB Resale Insights Page")
 
