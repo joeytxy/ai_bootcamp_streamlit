@@ -32,19 +32,19 @@ with st.form("Input"):
     st.caption("For a more tailored response, you may submit any of the following information. If you prefer a general response, you may choose to leave this portion empty.")
     col1,col2,col3 = st.columns(3)
     with col1:
-        age = col1.number_input(label = "Age", min_value = 18, max_value = 120, value = None, placeholder = None)
+        age = col1.number_input(label = "Age", min_value = 18, max_value = 120, value = st.session_state.get('age', None), placeholder = None)
 
     with col2:
-        monthly_income = col2.number_input(label = "Monthly Household Income", min_value = 0, max_value = 100000, value = None, placeholder = None)
+        monthly_income = col2.number_input(label = "Monthly Household Income", min_value = 0, max_value = 100000, value = st.session_state.get('monthly_income', None), placeholder = None)
 
     with col3:
-        marital = col3.selectbox(label = "Marital Staus", options = ["Single", "Married"], index= None)
+        marital = col3.selectbox(label = "Marital Staus", options = ["Single", "Married"], index= st.session_state.get('marital', None))
 
     st.header("HDB Resale Property Question")
-    question = st.text_area(label = "Please type out your question here:", value = "", placeholder= None)
+    question = st.text_area(label = "Please type out your question here:", value = st.session_state.get('question', ""), placeholder= None)
     st.caption("Click on submit to proceed")
     submitted_question = st.form_submit_button("Submit")
-    
+
 @st.cache_data(show_spinner=False)
 def question_ai(question,profile):
     tool_websearch = WebsiteSearchTool("https://www.hdb.gov.sg/cs/infoweb")
@@ -145,8 +145,14 @@ if submitted_question:
         my_dict = {"age":age, "monthly household income": monthly_income, "marital status": marital}
         profile = {k: v for k, v in my_dict.items() if v is not None}
         with st.spinner("Please wait..."):
-            st.info("Content will be cleared upon navigation to another page")
             answer = question_ai(question,profile)
-            st.markdown(answer.tasks_output[2])
+            st.session_state['answer'] = answer.tasks_output[2]
+            st.session_state['question'] = question
+            st.session_state['age'] = age
+            st.session_state['monthly_income'] = monthly_income
+            st.session_state['marital'] = marital
+
+if st.session_state.get('answer'):
+    st.markdown(st.session_state['answer'])
 
 
