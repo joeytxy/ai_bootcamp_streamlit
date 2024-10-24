@@ -45,7 +45,7 @@ with st.form("Input"):
     st.caption("Click on submit to proceed")
     submitted_question = st.form_submit_button("Submit")
 
-@st.cache_resource(show_spinner=False)
+#@st.cache_resource(show_spinner=False)
 def question_ai(question,profile):
     tool_websearch = WebsiteSearchTool("https://www.hdb.gov.sg/cs/infoweb")
 
@@ -145,6 +145,7 @@ if submitted_question:
         my_dict = {"age":age, "monthly household income": monthly_income, "marital status": marital}
         profile = {k: v for k, v in my_dict.items() if v is not None}
         with st.spinner("Please wait..."):
+            st.info("Content will be cleared upon navigation to another page")
             answer = question_ai(question,profile)
             st.markdown(answer.tasks_output[2])
 
