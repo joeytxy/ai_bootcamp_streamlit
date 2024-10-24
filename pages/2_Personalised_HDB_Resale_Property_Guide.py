@@ -26,16 +26,15 @@ else:
     os.environ['OPENAI_MODEL_NAME'] = st.secrets['OPENAI_MODEL_NAME']
 
 st.title("Welcome to your Personalised HDB Resale Property Guide!")
+clear_button = st.button("Clear form")
+if clear_button:
+    st.session_state['age'] = None
+    st.session_state['monthly_income'] = None
+    st.session_state['marital'] = None
+    st.session_state['question'] = ""
 
 with st.form("Input"):
-    header_col1, header_col2 = st.columns(2)
-    header_col1.header("Profile")
-    clear_button = header_col2.button("Clear")
-    if clear_button:
-        st.session_state['age'] = None
-        st.session_state['monthly_income'] = None
-        st.session_state['marital'] = None
-        st.session_state['question'] = ""
+    st.header("Profile")
     st.caption("For a more tailored response, you may submit any of the following information. If you prefer a general response, you may choose to leave this portion empty.")
     col1,col2,col3 = st.columns(3)
     with col1:
