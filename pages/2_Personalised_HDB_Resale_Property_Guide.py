@@ -45,6 +45,13 @@ with st.form("Input"):
     question = st.text_area(label = "Please type out your question here:", value = st.session_state.get('question', ""), placeholder= None)
     st.caption("Click on submit to proceed")
     submitted_question = st.form_submit_button("Submit")
+    clear_button = st.form_submit_button("Clear")
+    if clear_button:
+
+        st.session_state['age'] = None
+        st.session_state['monthly_income'] = None
+        st.session_state['marital'] = None
+        st.session_state['question'] = ""
 
 @st.cache_data(show_spinner=False)
 def question_ai(question,profile):
