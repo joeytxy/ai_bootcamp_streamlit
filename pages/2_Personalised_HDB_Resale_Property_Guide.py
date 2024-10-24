@@ -28,7 +28,14 @@ else:
 st.title("Welcome to your Personalised HDB Resale Property Guide!")
 
 with st.form("Input"):
-    st.header("Profile")
+    header_col1, header_col2 = st.columns(2)
+    header_col1.header("Profile")
+    clear_button = header_col2.button("Clear")
+    if clear_button:
+        st.session_state['age'] = None
+        st.session_state['monthly_income'] = None
+        st.session_state['marital'] = None
+        st.session_state['question'] = ""
     st.caption("For a more tailored response, you may submit any of the following information. If you prefer a general response, you may choose to leave this portion empty.")
     col1,col2,col3 = st.columns(3)
     with col1:
@@ -45,13 +52,6 @@ with st.form("Input"):
     question = st.text_area(label = "Please type out your question here:", value = st.session_state.get('question', ""), placeholder= None)
     st.caption("Click on submit to proceed")
     submitted_question = st.form_submit_button("Submit")
-    clear_button = st.form_submit_button("Clear")
-    if clear_button:
-
-        st.session_state['age'] = None
-        st.session_state['monthly_income'] = None
-        st.session_state['marital'] = None
-        st.session_state['question'] = ""
 
 @st.cache_data(show_spinner=False)
 def question_ai(question,profile):
