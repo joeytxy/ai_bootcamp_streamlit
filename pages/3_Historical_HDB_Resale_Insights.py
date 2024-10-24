@@ -21,6 +21,14 @@ st.set_page_config(
 if not check_password():  
     st.stop()
 
+if 'analysis_report' in st.session_state:
+    st.markdown(st.session_state['analysis_report'])
+    try:
+        graph_code = st.session_state['graph_code']
+        exec(graph_code.replace("`", "").replace("python", ""))
+    except:
+        st.error("Sorry, there are no available graphs")
+
 if load_dotenv():
     os.environ['OPENAI_API_KEY'] = os.getenv('OPENAI_API_KEY')
     os.environ['OPENAI_MODEL_NAME'] = os.getenv('OPENAI_MODEL_NAME')
@@ -190,9 +198,11 @@ if submitted_topic:
         with st.spinner("Please wait..."):
             st.info("Content will be cleared upon navigation to another page")
             analysis_report = data_ai(topic)
-            st.markdown(analysis_report.tasks_output[2])
+            st.session_state['analysis_report'] = analysis_report.tasks_output[2]
+            st.session_state['graph_code'] = str(analysis_report.tasks_output[3])
+            st.markdown(st.session_state['analysis_report'])
             try: 
-                graph_code = str(analysis_report.tasks_output[3])
+                graph_code = st.session_state['graph_code']
                 exec(graph_code.replace("`","").replace("python",""))
             except:
                 st.error("Sorry, there are no available graphs")
