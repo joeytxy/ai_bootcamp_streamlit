@@ -143,7 +143,8 @@ if submitted_question:
     else:
         my_dict = {"age":age, "monthly household income": monthly_income, "marital status": marital}
         profile = {k: v for k, v in my_dict.items() if v is not None}
-        answer = question_ai(question,profile)
-        st.markdown(answer.tasks_output[2])
+        with st.spinner("Please wait..."):
+            answer = question_ai(question,profile)
+            st.markdown(answer.tasks_output[2])
 
 

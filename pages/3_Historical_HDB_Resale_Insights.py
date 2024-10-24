@@ -186,10 +186,11 @@ if submitted_topic:
     elif not any(char.isalpha() for char in topic):
         st.error("Please enter a valid question")
     else:
-        analysis_report = data_ai(topic)
-        st.markdown(analysis_report.tasks_output[2])
-        try: 
-            graph_code = str(analysis_report.tasks_output[3])
-            exec(graph_code.replace("`","").replace("python",""))
-        except:
-            st.error("Sorry, there are no available graphs")
+        with st.spinner("Please wait..."):
+            analysis_report = data_ai(topic)
+            st.markdown(analysis_report.tasks_output[2])
+            try: 
+                graph_code = str(analysis_report.tasks_output[3])
+                exec(graph_code.replace("`","").replace("python",""))
+            except:
+                st.error("Sorry, there are no available graphs")
