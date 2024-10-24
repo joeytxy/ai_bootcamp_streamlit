@@ -1,11 +1,13 @@
 __import__('pysqlite3')
 import sys
 sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
 import streamlit as st
 import os
 from crewai import Agent, Task, Crew
 from crewai_tools import WebsiteSearchTool
 from dotenv import load_dotenv
+
 from utility import check_password
 
 st.set_page_config(
@@ -25,15 +27,6 @@ else:
 
 st.title("Welcome to your Personalised HDB Resale Property Guide!")
 
-if 'question' not in st.session_state:
-    st.session_state['question'] = ""
-if 'profile' not in st.session_state:
-    st.session_state['profile'] = ""
-
-def change_parameters(question, profile): 
-    st.session_state['question'] = question 
-    st.session_state['profile'] = profile
-
 with st.form("Input"):
     st.header("Profile")
     st.caption("For a more tailored response, you may submit any of the following information. If you prefer a general response, you may choose to leave this portion empty.")
@@ -46,12 +39,11 @@ with st.form("Input"):
 
     with col3:
         marital = col3.selectbox(label = "Marital Staus", options = ["Single", "Married"], index= None)
-    my_dict = {"age":age, "monthly household income": monthly_income, "marital status": marital}
-    profile = {k: v for k, v in my_dict.items() if v is not None}
+
     st.header("HDB Resale Property Question")
     question = st.text_area(label = "Please type out your question here:", value = "", placeholder= None)
     st.caption("Click on submit to proceed")
-    submitted_question = st.form_submit_button("Submit", on_click= change_parameters)
+    submitted_question = st.form_submit_button("Submit")
 
 @st.cache_resource(show_spinner=False)
 def question_ai(question,profile):
@@ -150,6 +142,8 @@ if submitted_question:
     elif not any(char.isalpha() for char in question):
         st.error("Please enter a valid question")
     else:
+        my_dict = {"age":age, "monthly household income": monthly_income, "marital status": marital}
+        profile = {k: v for k, v in my_dict.items() if v is not None}
         with st.spinner("Please wait..."):
             answer = question_ai(question,profile)
             st.markdown(answer.tasks_output[2])
