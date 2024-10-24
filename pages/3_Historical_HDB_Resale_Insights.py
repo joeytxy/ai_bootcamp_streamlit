@@ -38,7 +38,7 @@ with st.form("Input"):
     st.header("HDB Resale Property Question on Past Transactions")
     topic = st.text_area(label = "What would you like to find out?", value=st.session_state.get('topic', ""), placeholder= None)
     st.caption("Click on submit to proceed")
-    submitted_topic = st.form_submit_button("Submit")
+    submitted_topic = st.form_submit_button("Submit",  )
 
 df = pd.read_csv("ResaleflatpricesbasedonregistrationdatefromJan2017onwards.csv")
 
@@ -190,8 +190,8 @@ if submitted_topic:
         st.error("Please enter a valid topic/question")
     else:
         with st.spinner("Please wait..."):
-            analysis_report = data_ai(topic)
             st.session_state['topic'] = topic
+            analysis_report = data_ai(topic)
             st.session_state['analysis_report'] = analysis_report.tasks_output[2]
             st.session_state['graph_code'] = str(analysis_report.tasks_output[3])
 
