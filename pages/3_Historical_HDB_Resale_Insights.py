@@ -32,7 +32,7 @@ st.title("Welcome to the Historical HDB Resale Insights Page")
 
 with st.form("Input"):
     st.header("HDB Resale Property Question on Past Transactions")
-    topic = st.text_area(label = "Please type out your question here:", value = "", placeholder= None)
+    topic = st.text_area(label = "Please type out your question here:", value=st.session_state.get('topic', ""), placeholder= None)
     st.caption("Click on submit to proceed")
     submitted_topic = st.form_submit_button("Submit")
 
