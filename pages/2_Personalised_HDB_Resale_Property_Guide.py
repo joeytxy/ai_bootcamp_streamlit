@@ -156,7 +156,7 @@ if st.session_state.get('question'):
 if st.session_state.get('profile'):
     if st.session_state['profile']!={}:
         display_profile=[]
-        for key,value in st.session_state['profile']:
+        for key,value in st.session_state['profile'].items():
             display_profile.append(key.capitalize() +": " + value)
         st.warning(", ".join(display_profile))
 if st.session_state.get('answer'):
