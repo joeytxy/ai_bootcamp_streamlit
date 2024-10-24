@@ -32,16 +32,14 @@ with st.form("Input"):
     st.caption("For a more tailored response, you may submit any of the following information. If you prefer a general response, you may choose to leave this portion empty.")
     col1,col2,col3 = st.columns(3)
     with col1:
-        age = col1.number_input(label = "Age", min_value = 18, max_value = 120, value = st.session_state.get('age', None), placeholder = None)
-        if age!= st.session_state.get('age'):
-            st.session_state.age = age
+        age = col1.number_input(label = "Age", min_value = 18, max_value = 120, value = st.session_state.get('age', ""), placeholder = None)
 
     with col2:
-        monthly_income = col2.number_input(label = "Monthly Household Income", min_value = 0, max_value = 100000, value = st.session_state.get('monthly_income', None), placeholder = None)
+        monthly_income = col2.number_input(label = "Monthly Household Income", min_value = 0, max_value = 100000, value = st.session_state.get('monthly_income', ""), placeholder = None)
 
     with col3:
         option_list = ["Single", "Married"]
-        marital = col3.selectbox(label = "Marital Staus", options = option_list, index = st.session_state.get('marital', None))
+        marital = col3.selectbox(label = "Marital Staus", options = option_list, index = st.session_state.get('marital', ""))
 
     st.header("HDB Resale Property Question")
     question = st.text_area(label = "Please type out your question here:", value = st.session_state.get('question', ""), placeholder= None)
