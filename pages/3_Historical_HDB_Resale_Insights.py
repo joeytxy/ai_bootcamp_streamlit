@@ -37,6 +37,7 @@ if clear_button:
 with st.form("Input"):
     st.header("HDB Resale Property Question on Past Transactions")
     topic = st.text_area(label = "What would you like to find out?", value=st.session_state.get('topic', ""), placeholder= None)
+    st.session_state['topic'] = topic
     st.caption("Click on submit to proceed")
     submitted_topic = st.form_submit_button("Submit",  )
 
