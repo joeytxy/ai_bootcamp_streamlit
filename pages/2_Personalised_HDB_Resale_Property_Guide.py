@@ -26,7 +26,8 @@ else:
     os.environ['OPENAI_MODEL_NAME'] = st.secrets['OPENAI_MODEL_NAME']
 
 st.title("Welcome to your Personalised HDB Resale Property Guide!")
-clear_button = st.button("Clear form")
+
+clear_button = st.button("Clear input from previous run")
 if clear_button:
     st.session_state['age'] = None
     st.session_state['monthly_income'] = None
@@ -157,7 +158,11 @@ if submitted_question:
             st.session_state['question'] = question
             st.session_state['age'] = age
             st.session_state['monthly_income'] = monthly_income
-            st.session_state['marital'] = option_list.index(marital)
+            st.session_state['attempted_run'] = True
+            if marital==None:
+                st.session_state['marital'] = None
+            else:
+                st.session_state['marital'] = option_list.index(marital)
 
 if st.session_state.get('answer'):
     st.markdown(st.session_state['answer'])

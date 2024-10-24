@@ -30,6 +30,10 @@ else:
 
 st.title("Welcome to the Historical HDB Resale Insights Page")
 
+clear_button = st.button("Clear input from previous run")
+if clear_button:
+    st.session_state['topic'] = ""
+
 with st.form("Input"):
     st.header("HDB Resale Property Question on Past Transactions")
     topic = st.text_area(label = "What would you like to find out?", value=st.session_state.get('topic', ""), placeholder= None)
