@@ -14,9 +14,12 @@ st.set_page_config(
 if not check_password():  
     st.stop()
 
-load_dotenv()
-os.environ['OPENAI_API_KEY'] = os.getenv('OPENAI_API_KEY')
-os.environ['OPENAI_MODEL_NAME'] = os.getenv('OPENAI_MODEL_NAME')
+if load_dotenv():
+    os.environ['OPENAI_API_KEY'] = os.getenv('OPENAI_API_KEY')
+    os.environ['OPENAI_MODEL_NAME'] = os.getenv('OPENAI_MODEL_NAME')
+else:
+    os.environ['OPENAI_API_KEY'] = st.secrets('OPENAI_API_KEY')
+    os.environ['OPENAI_MODEL_NAME'] = st.secrets('OPENAI_MODEL_NAME')
 
 st.title("Welcome to your Personalised HDB Resale Property Guide!")
 
