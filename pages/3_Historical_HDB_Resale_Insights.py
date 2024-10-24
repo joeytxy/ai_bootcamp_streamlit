@@ -187,7 +187,8 @@ if submitted_topic:
     else:
         with st.spinner("Please wait..."):
             analysis_report = data_ai(topic)
-            st.session_state['topic'] = topic
+            prev_topic = topic
+            st.session_state['topic'] = prev_topic
             st.session_state['analysis_report'] = analysis_report.tasks_output[2]
             st.session_state['graph_code'] = str(analysis_report.tasks_output[3])
 
