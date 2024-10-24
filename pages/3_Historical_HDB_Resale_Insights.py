@@ -36,6 +36,17 @@ with st.form("Input"):
     st.caption("Click on submit to proceed")
     submitted_topic = st.form_submit_button("Submit")
 
+if 'topic' in st.session_state:
+    display_qn = "Your Previous Question: "+ st.session_state['topic']
+    st.info(display_qn)
+if 'analysis_report' in st.session_state:
+    st.markdown(st.session_state['analysis_report'])
+    try:
+        graph_code = st.session_state['graph_code']
+        exec(graph_code.replace("`", "").replace("python", ""))
+    except:
+        st.error("Sorry, there are no available graphs")
+
 df = pd.read_csv("ResaleflatpricesbasedonregistrationdatefromJan2017onwards.csv")
 
 @st.cache_data(show_spinner=False)
@@ -188,11 +199,13 @@ if submitted_topic:
         st.error("Please enter a valid question")
     else:
         with st.spinner("Please wait..."):
-            st.info("Content will be cleared upon navigation to another page")
             analysis_report = data_ai(topic)
-            st.markdown(analysis_report.tasks_output[2])
-            try: 
-                graph_code = str(analysis_report.tasks_output[3])
-                exec(graph_code.replace("`","").replace("python",""))
+            st.session_state['analysis_report'] = analysis_report.tasks_output[2]
+            st.session_state['graph_code'] = str(analysis_report.tasks_output[3])
+            st.session_state['topic'] = topic
+            st.markdown(st.session_state['analysis_report'])
+            try:
+                graph_code = st.session_state['graph_code']
+                exec(graph_code.replace("`", "").replace("python", ""))
             except:
                 st.error("Sorry, there are no available graphs")
