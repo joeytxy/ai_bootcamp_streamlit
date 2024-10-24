@@ -30,14 +30,9 @@ else:
 
 st.title("Welcome to the Historical HDB Resale Insights Page")
 
-clear_button = st.button("Clear input from previous run")
-if clear_button:
-    st.session_state['topic'] = ""
-
 with st.form("Input"):
     st.header("HDB Resale Property Question on Past Transactions")
-    topic = st.text_area(label = "What would you like to find out?", value=st.session_state.get('topic', ""), placeholder= None)
-    st.session_state['topic'] = topic
+    topic = st.text_area(label = "What would you like to find out?", value="", placeholder= None)
     st.caption("Click on submit to proceed")
     submitted_topic = st.form_submit_button("Submit",  )
 
@@ -196,6 +191,8 @@ if submitted_topic:
             st.session_state['analysis_report'] = analysis_report.tasks_output[2]
             st.session_state['graph_code'] = str(analysis_report.tasks_output[3])
 
+if st.session_state.get('topic'):
+    st.info(st.session_state['topic'])
 if st.session_state.get('analysis_report'):
     st.markdown(st.session_state['analysis_report'])
 if st.session_state.get('graph_code'):
