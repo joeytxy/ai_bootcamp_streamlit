@@ -44,8 +44,7 @@ with st.form("Input"):
     question = st.text_area(label = "Please type out your question here:", value = "", placeholder= None)
     st.caption("Click on submit to proceed")
     submitted_question = st.form_submit_button("Submit")
-
-#@st.cache_resource(show_spinner=False)
+    
 @st.cache_data(show_spinner=False)
 def question_ai(question,profile):
     tool_websearch = WebsiteSearchTool("https://www.hdb.gov.sg/cs/infoweb")

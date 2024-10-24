@@ -38,7 +38,7 @@ with st.form("Input"):
 
 df = pd.read_csv("ResaleflatpricesbasedonregistrationdatefromJan2017onwards.csv")
 
-@st.cache_resource(show_spinner=False)
+@st.cache_data(show_spinner=False)
 def data_ai(topic):
     pandas_tool_agent = create_pandas_dataframe_agent(
         llm=ChatOpenAI(temperature=0, model='gpt-4o-mini'),
@@ -188,6 +188,7 @@ if submitted_topic:
         st.error("Please enter a valid question")
     else:
         with st.spinner("Please wait..."):
+            st.info("Content will be cleared upon navigation to another page")
             analysis_report = data_ai(topic)
             st.markdown(analysis_report.tasks_output[2])
             try: 
