@@ -45,7 +45,7 @@ with st.form("Input"):
     st.caption("Click on submit to proceed")
     submitted_question = st.form_submit_button("Submit")
 
-@st.cache_data
+@st.cache_data(show_spinner=False)
 def question_ai(question,profile):
     tool_websearch = WebsiteSearchTool("https://www.hdb.gov.sg/cs/infoweb")
 
