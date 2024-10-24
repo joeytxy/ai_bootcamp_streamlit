@@ -38,6 +38,7 @@ with st.form("Input"):
 
 df = pd.read_csv("ResaleflatpricesbasedonregistrationdatefromJan2017onwards.csv")
 
+@st.cache_data
 def data_ai(topic):
     pandas_tool_agent = create_pandas_dataframe_agent(
         llm=ChatOpenAI(temperature=0, model='gpt-4o-mini'),
