@@ -30,22 +30,11 @@ else:
 
 st.title("Welcome to the Historical HDB Resale Insights Page")
 
-if 'topic' not in st.session_state:
-    st.session_state['topic'] = "" 
-
 with st.form("Input"):
     st.header("HDB Resale Property Question on Past Transactions")
-    topic = st.text_area(label = "Please type out your question here:", value = st.session_state['topic'], placeholder= None)
+    topic = st.text_area(label = "Please type out your question here:", value = "", placeholder= None)
     st.caption("Click on submit to proceed")
     submitted_topic = st.form_submit_button("Submit")
-
-if 'analysis_report' in st.session_state:
-    st.markdown(st.session_state['analysis_report'])
-    try:
-        graph_code = st.session_state['graph_code']
-        exec(graph_code.replace("`", "").replace("python", ""))
-    except:
-        st.error("Sorry, there are no available graphs")
 
 df = pd.read_csv("ResaleflatpricesbasedonregistrationdatefromJan2017onwards.csv")
 
@@ -201,11 +190,9 @@ if submitted_topic:
         with st.spinner("Please wait..."):
             st.info("Content will be cleared upon navigation to another page")
             analysis_report = data_ai(topic)
-            st.session_state['analysis_report'] = analysis_report.tasks_output[2]
-            st.session_state['graph_code'] = str(analysis_report.tasks_output[3])
-            st.markdown(st.session_state['analysis_report'])
+            st.markdown(analysis_report.tasks_output[2])
             try: 
-                graph_code = st.session_state['graph_code']
+                graph_code = str(analysis_report.tasks_output[3])
                 exec(graph_code.replace("`","").replace("python",""))
             except:
                 st.error("Sorry, there are no available graphs")
