@@ -187,14 +187,10 @@ if submitted_topic:
     else:
         with st.spinner("Please wait..."):
             analysis_report = data_ai(topic)
-            prev_topic = topic
-            st.session_state['topic'] = prev_topic
+            st.session_state['topic'] = topic
             st.session_state['analysis_report'] = analysis_report.tasks_output[2]
             st.session_state['graph_code'] = str(analysis_report.tasks_output[3])
 
-if st.session_state.get('topic'):
-    display_qn = "Your Question: " + topic
-    st.info(display_qn)
 if st.session_state.get('analysis_report'):
     st.markdown(st.session_state['analysis_report'])
 if st.session_state.get('graph_code'):
