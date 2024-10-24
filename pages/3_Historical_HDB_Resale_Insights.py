@@ -21,14 +21,6 @@ st.set_page_config(
 if not check_password():  
     st.stop()
 
-if 'analysis_report' in st.session_state:
-    st.markdown(st.session_state['analysis_report'])
-    try:
-        graph_code = st.session_state['graph_code']
-        exec(graph_code.replace("`", "").replace("python", ""))
-    except:
-        st.error("Sorry, there are no available graphs")
-
 if load_dotenv():
     os.environ['OPENAI_API_KEY'] = os.getenv('OPENAI_API_KEY')
     os.environ['OPENAI_MODEL_NAME'] = os.getenv('OPENAI_MODEL_NAME')
@@ -43,6 +35,14 @@ with st.form("Input"):
     topic = st.text_area(label = "Please type out your question here:", value = "", placeholder= None)
     st.caption("Click on submit to proceed")
     submitted_topic = st.form_submit_button("Submit")
+    
+if 'analysis_report' in st.session_state:
+    st.markdown(st.session_state['analysis_report'])
+    try:
+        graph_code = st.session_state['graph_code']
+        exec(graph_code.replace("`", "").replace("python", ""))
+    except:
+        st.error("Sorry, there are no available graphs")
 
 df = pd.read_csv("ResaleflatpricesbasedonregistrationdatefromJan2017onwards.csv")
 
