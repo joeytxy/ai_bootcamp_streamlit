@@ -40,7 +40,7 @@ if st.session_state.get("topic"):
         st.header("HDB Resale Property Question on Past Transactions")
         topic = st.text_area(label = "Please type out your question here:", value = "", placeholder= None)
         st.caption("Click on submit to proceed")
-        submitted_topic = st.form_submit_button("Submit", on_click=clear_parameters())
+        submitted_topic = st.form_submit_button("Submit", on_click=clear_parameters)
 else:
     with st.form("Input"):
         st.header("HDB Resale Property Question on Past Transactions")
